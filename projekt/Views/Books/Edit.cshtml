@@ -1,0 +1,43 @@
+@model MvcLibrary.Models.Book
+
+@{
+    ViewData["Title"] = "Edytuj";
+}
+
+<div class="container mt-4">
+    <h2>Edytuj pozycję</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-6 shadow-sm p-4 border rounded bg-light">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label fw-bold"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Author" class="form-label fw-bold"></label>
+                    <input asp-for="Author" class="form-control" />
+                    <span asp-validation-for="Author" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ReleaseYear" class="form-label fw-bold"></label>
+                    <input asp-for="ReleaseYear" class="form-control" type="number" />
+                    <span asp-validation-for="ReleaseYear" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Zapisz zmiany</button>
+                <a asp-action="Index" class="btn btn-link w-100 mt-2">Powrót</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

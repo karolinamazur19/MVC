@@ -1,0 +1,54 @@
+@model IEnumerable<MvcLibrary.Models.Book>
+
+@{
+    ViewData["Title"] = "Lista Książek";
+}
+
+<div class="container mt-4">
+    <h1 class="display-5 text-primary">📚 Cyfrowa Biblioteka</h1>
+    <hr />
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <form asp-action="Index" method="get" class="d-flex shadow-sm p-2 bg-light rounded border">
+                <input type="text" name="searchString" class="form-control me-2" placeholder="Wyszukaj..." />
+                <button type="submit" class="btn btn-primary">Szukaj</button>
+                <a asp-action="Index" class="btn btn-outline-secondary ms-2">Wyczyść</a>
+            </form>
+        </div>
+    </div>
+
+    <p><a asp-action="Create" class="btn btn-success shadow-sm">Dodaj nową książkę</a></p>
+
+    <table class="table table-hover table-bordered shadow-sm rounded">
+        <thead class="table-dark text-center">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Title)</th>
+                <th>@Html.DisplayNameFor(model => model.Author)</th>
+                <th>@Html.DisplayNameFor(model => model.ReleaseYear)</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody class="text-center align-middle">
+            @if (!Model.Any()) {
+                <tr><td colspan="4" class="text-muted py-4">Brak wyników.</td></tr>
+            } else {
+                @foreach (var item in Model) {
+                    <tr>
+                        <td class="fw-bold">@item.Title</td>
+                        <td>@item.Author</td>
+                        <td><span class="badge bg-info text-dark">@item.ReleaseYear</span></td>
+                        <td>
+                            <div class="d-flex justify-content-center gap-2">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edytuj</a>
+                                <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Czy usunąć?');">
+                                    <button type="submit" class="btn btn-sm btn-danger">Usuń</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
